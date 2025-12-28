@@ -29,6 +29,12 @@ const router = createRouter({
       meta: { isAuthRequired: false }
     },
     {
+      name: 'request',
+      path: '/request',
+      component: () => import('../views/request/TheRequestComponent.vue'),
+      meta: { isAuthRequired: true }
+    },
+    {
       name: 'content-not-found',
       path: '/:pathMatch(.*)*',
       component: () => import('../views/TheContentNotFoundComponent.vue')
