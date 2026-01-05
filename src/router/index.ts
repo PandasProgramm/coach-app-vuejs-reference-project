@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CoachListComponent from "@/views/coach/CoachListComponent.vue";
+import {useAuthStore} from "@/stores/AuthStore.ts";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     { path: '/', redirect: '/coaches' },
     {
@@ -23,10 +24,10 @@ const router = createRouter({
     },
     { path: '/:pathMatch(.*)*', redirect: '/coaches' },
     {
-      name: 'register',
+      name: 'coach-register',
       path: '/register',
-      component: () => import('../views/auth/TheRegisterComponent.vue'),
-      meta: { isAuthRequired: false }
+      component: () => import('../views/coach/CoachRegistrationComponent.vue'),
+      meta: { isAuthRequired: true }
     },
     {
       name: 'request',
@@ -37,9 +38,34 @@ const router = createRouter({
     {
       name: 'content-not-found',
       path: '/:pathMatch(.*)*',
-      component: () => import('../views/TheContentNotFoundComponent.vue')
+      component: () => import('../views/TheContentNotFoundComponent.vue'),
+      meta: { isAuthRequired: true }
+    },
+    {
+      name: 'auth-login',
+      path: '/auth/login',
+      component: () => import('../views/auth/TheLoginComponent.vue'),
+      meta: { isAuthRequired: false }
+    },
+    {
+      name: 'auth-register',
+      path: '/auth/register',
+      component: () => import('../views/auth/TheRegisterComponent.vue'),
+      meta: { isAuthRequired: false }
     }
   ],
+})
+
+router.beforeEach( (to) => {
+  const authStore = useAuthStore();
+
+  if(isAccessDenied()) {
+    return { name: 'auth-login' }
+  }
+
+  function isAccessDenied() {
+    return to.meta.isAuthRequired && !authStore.isAuthenticated;
+  }
 })
 
 export default router
