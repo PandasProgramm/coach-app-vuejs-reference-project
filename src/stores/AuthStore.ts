@@ -4,7 +4,7 @@ import {computed, ref} from "vue";
 
 const initialAuthState: AuthState = { user: undefined, isAuthenticated: true, token: undefined, error: undefined, isLoading: false }
 
-export const useAuthStore = defineStore('auth-store', () => {
+export const useAuthStore = defineStore('auth-stores', () => {
   const authState = ref<AuthState>(initialAuthState);
 
   const user = computed(() => authState.value.user)

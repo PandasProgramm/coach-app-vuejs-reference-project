@@ -10,49 +10,55 @@ const router = createRouter({
       name: 'coach-list',
       path: '/coaches',
       component: CoachListComponent,
-      meta: { isAuthRequired: true }
+      children: [
+        {
+          name: 'contact',
+          path: ':id/contact',
+          component: () => import('../views/coach/ContactComponent.vue'),
+          props: true,
+        },
+      ],
+      meta: { isAuthRequired: true },
     },
     {
       name: 'coach-detail',
       path: '/coaches/:id',
       component: () => import('../views/coach/CoachDetailComponent.vue'),
       props: true,
-      children: [
-        { name: 'contact', path: 'contact', component: () => import('../views/coach/ContactComponent.vue'), props: true }
-      ],
-      meta: { isAuthRequired: true }
+
+      meta: { isAuthRequired: true },
     },
     { path: '/:pathMatch(.*)*', redirect: '/coaches' },
     {
       name: 'coach-register',
       path: '/register',
       component: () => import('../views/coach/CoachRegistrationComponent.vue'),
-      meta: { isAuthRequired: true }
+      meta: { isAuthRequired: true },
     },
     {
       name: 'request',
       path: '/request',
       component: () => import('../views/request/TheRequestComponent.vue'),
-      meta: { isAuthRequired: true }
+      meta: { isAuthRequired: true },
     },
     {
       name: 'content-not-found',
       path: '/:pathMatch(.*)*',
       component: () => import('../views/TheContentNotFoundComponent.vue'),
-      meta: { isAuthRequired: true }
+      meta: { isAuthRequired: true },
     },
     {
       name: 'auth-login',
       path: '/auth/login',
       component: () => import('../views/auth/TheLoginComponent.vue'),
-      meta: { isAuthRequired: false }
+      meta: { isAuthRequired: false },
     },
     {
       name: 'auth-register',
       path: '/auth/register',
       component: () => import('../views/auth/TheRegisterComponent.vue'),
-      meta: { isAuthRequired: false }
-    }
+      meta: { isAuthRequired: false },
+    },
   ],
 })
 

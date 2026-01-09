@@ -1,20 +1,20 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="chip-container">
+  <div class="container">
     <slot></slot>
   </div>
 </template>
 
 <style scoped>
-  .chip-container {
+  .container {
     display: inline-block;
     text-align: center;
     line-height: 25px;
-    padding: 0 8px;
+    padding: 5px 8px 5px 8px;
     border-radius: 25px;
     width: 7rem;
+    font-size: 12px;
+    font-weight: bold;
   }
 </style>

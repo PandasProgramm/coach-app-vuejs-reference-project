@@ -1,11 +1,11 @@
 import {vi, beforeEach, describe, it, expect, afterEach} from "vitest";
 import {createPinia, setActivePinia} from "pinia";
-import {useCoachStore} from "@/stores/coach-store/CoachStore.ts";
-import type {CoachState} from "@/stores/state-types/CoachState.ts";
-import {type Coach, CoachingFocus} from "@/domain/Coach.ts";
-import {coachHttpService} from "@/service/CoachHttpService.ts";
+import { useCoachStore } from '@/stores/coach-store/CoachStore.ts'
+import { coachHttpService } from '@/service/CoachHttpService.ts'
+import type { CoachState } from '@/stores/state-types/CoachState.ts'
+import { type Coach, CoachingFocus } from '@/domain/Coach.ts'
 
-describe('coach store', () => {
+describe('coach stores', () => {
 
   let store: ReturnType<typeof useCoachStore>;
 
@@ -65,7 +65,7 @@ describe('coach store', () => {
     spy.mockRestore();
   })
 
-  it('should add coach to store', async () => {
+  it('should add coach to stores', async () => {
 
     const coachToCreate: Coach = {
       id: "1",
@@ -93,7 +93,7 @@ describe('coach store', () => {
     expect(store.coaches).toEqual([coachToCreate]);
   })
 
-  it('should delete coach from store', async () => {
+  it('should delete coach from stores', async () => {
 
     const deleteCoachId = "1";
 

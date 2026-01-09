@@ -24,8 +24,9 @@ class CoachHttpService {
 
   async getAllCoaches(): Promise<Coach[]> {
     try {
-      const { data }: AxiosResponse<Record<string, CoachToCreate>> = await this.apiClient.get(`/coaches.json`);
-      if (!data) return [];
+      const { data }: AxiosResponse<Record<string, Coach>> = await this.apiClient.get(`/coaches.json`);
+
+      if (!data || typeof data !== 'object') return [];
       return Object.entries(data).map(([firebaseKey, coach]) => ({
         ...coach,
         id: firebaseKey
