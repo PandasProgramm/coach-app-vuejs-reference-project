@@ -4,6 +4,7 @@ import { useRequestStore } from '@/stores/request-store/RequestStore.ts'
 import type { RequestState } from '@/stores/state-types/RequestState.ts'
 import { requestHttpService } from '@/service/RequestHttpService.ts'
 import type { Request } from '@/domain/Request.ts'
+import type { RequestToCreate } from '@/domain/RequestToCreate.ts'
 
 describe('request store', () => {
   let store: ReturnType<typeof useRequestStore>
@@ -49,5 +50,29 @@ describe('request store', () => {
     expect(store.requests).toEqual([{ id: 1, coachId: 1, email: 'test-mail', message: 'test-message'}])
   })
 
-  it('should create a request', () => {})
+  it('should create a request', async () => {
+
+    const requestToCreate: RequestToCreate = { coachId: 1, email: 'test-mail', message: 'test-message' }
+    const expected: Request = {...requestToCreate, id: '1'}
+    vi.spyOn(requestHttpService, 'createRequest').mockResolvedValue(expected)
+
+    await store.createRequest(requestToCreate)
+    expect(store.requests).toHaveLength(1)
+    expect(store.requests).toEqual([expected])
+  })
+
+  it('should delete a request', async () => {
+    store.requestState.requests = [
+      { id: '1', coachId: 1, email: 'test-mail', message: 'test-message' },
+      { id: '2', coachId: 1, email: 'test-mail', message: 'test-message' },
+    ]
+
+    vi.spyOn(requestHttpService, 'deleteRequest').mockResolvedValue()
+    const requestIdToDelete = '1'
+    await store.deleteRequest(requestIdToDelete)
+    expect(store.requests).toHaveLength(1)
+    await vi.waitFor(() => expect(store.requests).toEqual([
+      { id: '2', coachId: 1, email: 'test-mail', message: 'test-message' }
+    ]));
+  })
 })
