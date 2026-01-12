@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CoachListComponent from "@/views/coach/CoachListComponent.vue";
-import {useAuthStore} from "@/stores/AuthStore.ts";
+import {useAuthStore} from "@/stores/auth-store/AuthStore.ts";
 
 const router = createRouter({
   history: createWebHistory(),
